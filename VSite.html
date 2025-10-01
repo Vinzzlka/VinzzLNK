@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka One', cursive;
+      background: black;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    .screen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      background: black;
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.1);
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px black;
+    }
+    .logo {
+      font-size: 100px;
+      color: red;
+      text-shadow: 0 0 25px rgba(255,0,0,0.7);
+      margin: 30px 0;
+    }
+    button {
+      font-family: 'Fredoka One', cursive;
+      font-size: 20px;
+      padding: 15px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #2a0a0a;
+      color: white;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    button:hover {
+      background: #3c0f0f;
+      transform: scale(1.05);
+    }
+    .menu {
+      background: rgba(40, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      animation: fadeInUp 0.7s ease;
+    }
+    .back, .close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .plus {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 35px;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      border: none;
+      background: #2a0a0a;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .plus:hover {
+      transform: scale(1.1);
+    }
+    .credits {
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      background: #4b0d0d;
+      border-radius: 15px;
+      animation: fadeInUp 0.7s ease;
+    }
+    .credit-box {
+      background: #662020;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 12px;
+    }
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Notification Styles */
+    #notify {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4444;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: bottom 0.5s ease;
+      z-index: 1000;
+    }
+    #notify.show {
+      bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div id="splash" class="screen">
+    <h1>Welcome to VSite</h1>
+    <div class="logo">V</div>
+    <button onclick="showMenu()">Click me!</button>
+    <button class="plus" onclick="showCredits()">+</button>
+  </div>
+
+  <!-- Menu Screen -->
+  <div id="menu" class="screen hidden">
+    <button class="back" onclick="showSplash()">-</button>
+    <h1>Welcome to VSite</h1>
+    <div class="menu">
+      <p>Hello!, what do you need?</p>
+      <button onclick="showNotify()">VScript | Roblox</button>
+      <div class="logo">V</div>
+      <button onclick="showNotify()">VScript | TikTok</button>
+      <button onclick="showNotify()">VScript | Executor</button>
+    </div>
+    <button class="plus" onclick="showCredits()">+</button>
+  </div>
+
+  <!-- Credits Screen -->
+  <div id="credits" class="screen hidden">
+    <button class="close" onclick="backFromCredits()">-</button>
+    <h1>Credits:</h1>
+    <div class="credits">
+      <div class="credit-box">
+        <p>Owner:</p>
+        <h2>Kevin</h2>
+      </div>
+      <div class="credit-box">
+        <p>CEO:</p>
+        <h2>Melon Musk</h2>
+      </div>
+      <div class="credit-box">
+        <p>Founder:</p>
+        <h2>Kevin</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div id="notify">Sorry! This is Testing</div>
+
+  <script>
+    function showMenu() {
+      document.getElementById("splash").classList.add("hidden");
+      setTimeout(() => {
+        document.getElementById("menu").classList.remove("hidden");
+      }, 500);
+    }
+    function showSplash() {
+      document.getElementById("menu").classList.add("hidden");
+      setTimeout(() => {
+        document.getElementById("splash").classList.remove("hidden");
+      }, 500);
+    }
+    function showCredits() {
+      document.getElementById("splash").classList.add("hidden");
+      document.getElementById("menu").classList.add("hidden");
+      setTimeout(() => {
+        document.getElementById("credits").classList.remove("hidden");
+      }, 500);
+    }
+    function backFromCredits() {
+      document.getElementById("credits").classList.add("hidden");
+      setTimeout(() => {
+        document.getElementById("splash").classList.remove("hidden");
+      }, 500);
+    }
+    function showNotify() {
+      let notify = document.getElementById("notify");
+      notify.classList.add("show");
+      setTimeout(() => {
+        notify.classList.remove("show");
+      }, 2000); // hides after 2s
+    }
+  </script>
+</body>
+</html>
